@@ -1,3 +1,6 @@
+import org.gradle.kotlin.dsl.androidTestImplementation
+import org.gradle.kotlin.dsl.debugImplementation
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -61,6 +64,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    androidTestImplementation (libs.androidx.junit.v130)
+    androidTestImplementation (libs.androidx.espresso.core.v370)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
 
     // Compose dependencies
     implementation(libs.androidx.lifecycle.viewmodel.compose)
@@ -79,7 +85,8 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
 
 
-    implementation("com.google.dagger:hilt-android:2.56.2")
+    implementation(libs.hilt.android.v2562)
+
 
 
     // Room
@@ -90,6 +97,29 @@ dependencies {
 
     // Kotlin Extensions and Coroutines support for Room
     implementation(libs.androidx.room.ktx)
+
+    // Local unit tests
+    testImplementation (libs.androidx.core)
+    testImplementation (libs.junit)
+    testImplementation (libs.androidx.core.testing)
+    testImplementation (libs.kotlinx.coroutines.test)
+    testImplementation (libs.truth)
+    testImplementation (libs.mockwebserver)
+    testImplementation (libs.mockk)
+    debugImplementation (libs.ui.test.manifest)
+
+    // Instrumentation tests
+    androidTestImplementation ("com.google.dagger:hilt-android-testing:2.57")
+    kaptAndroidTest ("com.google.dagger:hilt-android-compiler:2.57")
+    androidTestImplementation (libs.junit)
+    androidTestImplementation (libs.kotlinx.coroutines.test.v151)
+    androidTestImplementation (libs.androidx.core.testing.v210)
+    androidTestImplementation (libs.truth)
+    androidTestImplementation (libs.androidx.junit.v130)
+    androidTestImplementation (libs.core.ktx)
+    androidTestImplementation (libs.mockwebserver)
+    androidTestImplementation (libs.mockk.android)
+    androidTestImplementation (libs.androidx.runner)
 
 
 
