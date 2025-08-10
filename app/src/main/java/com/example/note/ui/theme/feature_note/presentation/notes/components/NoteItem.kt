@@ -22,10 +22,13 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.clipPath
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.ColorUtils
+import com.example.note.ui.theme.core.Constants
 import com.example.note.ui.theme.feature_note.domain.model.Note
 
 @Composable
@@ -38,6 +41,11 @@ fun NoteItem(
 ) {
     Box(
         modifier = modifier
+            .testTag(Constants.NOTE_ITEM)
+            .semantics(
+                mergeDescendants = true,
+                properties = {}
+            )
     ) {
         Canvas(modifier = Modifier.matchParentSize()) {
             val clipPath = Path().apply {
@@ -62,7 +70,7 @@ fun NoteItem(
             }
         }
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
                 .padding(end = 32.dp)

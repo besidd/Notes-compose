@@ -1,5 +1,8 @@
+@file:Suppress("DEPRECATION")
+
 import org.gradle.kotlin.dsl.androidTestImplementation
 import org.gradle.kotlin.dsl.debugImplementation
+import org.gradle.kotlin.dsl.kaptTest
 
 plugins {
     alias(libs.plugins.android.application)
@@ -7,11 +10,12 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("org.jetbrains.kotlin.kapt")
     id("com.google.dagger.hilt.android")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
     namespace = "com.example.note"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.note"
@@ -20,7 +24,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.note.HiltTestRunner"
     }
 
     buildTypes {
@@ -42,8 +46,17 @@ android {
     buildFeatures {
         compose = true
     }
+    hilt {
+        enableTransformForLocalTests = true
+    }
     kapt {
         correctErrorTypes = true
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/LICENSE.md"
+            excludes += "/META-INF/LICENSE-notice.md"
+        }
     }
 }
 
@@ -58,6 +71,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     testImplementation(libs.junit)
+    testImplementation(libs.junit.junit)
+    testImplementation(libs.dagger.hilt.android.testing)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -83,9 +98,11 @@ dependencies {
 
     // Hilt Compose integration
     implementation(libs.androidx.hilt.navigation.compose)
+    androidTestImplementation ("androidx.startup:startup-runtime:1.2.0")
 
 
     implementation(libs.hilt.android.v2562)
+    implementation(libs.androidx.startup.runtime)
 
 
 
@@ -107,10 +124,12 @@ dependencies {
     testImplementation (libs.mockwebserver)
     testImplementation (libs.mockk)
     debugImplementation (libs.ui.test.manifest)
+    kaptTest (libs.hilt.android.compiler)
 
     // Instrumentation tests
-    androidTestImplementation ("com.google.dagger:hilt-android-testing:2.57")
-    kaptAndroidTest ("com.google.dagger:hilt-android-compiler:2.57")
+    androidTestImplementation (libs.dagger.hilt.android.testing)
+    kaptAndroidTest (libs.hilt.android.compiler)
+    implementation (libs.kotlin.stdlib)
     androidTestImplementation (libs.junit)
     androidTestImplementation (libs.kotlinx.coroutines.test.v151)
     androidTestImplementation (libs.androidx.core.testing.v210)
@@ -120,7 +139,7 @@ dependencies {
     androidTestImplementation (libs.mockwebserver)
     androidTestImplementation (libs.mockk.android)
     androidTestImplementation (libs.androidx.runner)
-
+    implementation("androidx.compose.ui:ui:1.8.3")
 
 
 }

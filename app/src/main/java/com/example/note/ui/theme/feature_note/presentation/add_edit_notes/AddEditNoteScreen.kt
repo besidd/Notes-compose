@@ -1,6 +1,5 @@
 package com.example.note.ui.theme.feature_note.presentation.add_edit_notes
 
-import android.util.Log
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -38,6 +37,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.note.ui.theme.core.Constants
 import com.example.note.ui.theme.feature_note.domain.model.Note
 import com.example.note.ui.theme.feature_note.presentation.add_edit_notes.components.TransparentTextField
 import com.example.note.ui.theme.feature_note.presentation.add_edit_notes.viewModel.AddEditNoteViewModel
@@ -61,8 +61,6 @@ fun AddEditNoteScreen(
             Color(if (noteColor != -1) noteColor else viewModel.noteColor.value)
         )
     }
-
-    Log.d("colorbg", noteColor.toString())
 
     val scope = rememberCoroutineScope()
 
@@ -151,6 +149,7 @@ fun AddEditNoteScreen(
                     },
                     isHintVisible = titleState.isHintVisible,
                     singleLine = true,
+                    testTag = Constants.TITLE_TEXT_FIELD,
                     textStyle = MaterialTheme.typography.headlineLarge
                 )
 
@@ -168,6 +167,7 @@ fun AddEditNoteScreen(
                     isHintVisible = contentState.isHintVisible,
                     singleLine = false,
                     textStyle = MaterialTheme.typography.bodyMedium,
+                    testTag = Constants.CONTENT_TEXT_FIELD,
                     modifier = Modifier.fillMaxHeight()
                 )
             }

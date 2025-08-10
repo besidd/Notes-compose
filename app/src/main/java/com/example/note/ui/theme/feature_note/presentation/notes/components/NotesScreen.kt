@@ -35,6 +35,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,6 +44,7 @@ import com.example.note.ui.theme.feature_note.presentation.notes.NotesEvents
 import com.example.note.ui.theme.feature_note.presentation.notes.NotesViewModel
 import com.example.note.ui.theme.feature_note.presentation.uti.Screen
 import kotlinx.coroutines.launch
+import com.example.note.ui.theme.core.Constants
 
 @Composable
 fun NotesScreen(
@@ -95,7 +97,7 @@ fun NotesScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Sort,
-                        contentDescription = "Sort"
+                        contentDescription = "Sorting"
                     )
                 }
             }
@@ -109,7 +111,8 @@ fun NotesScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 16.dp)
-                        .background(color = Color.Blue),
+                        .background(color = Color.Blue)
+                        .testTag(Constants.ORDER_SCREEN_TEST_TAG),
                     noteOrder = state.noteOrder,
                     onOrderChange = {
                         viewModel.onEvent(
